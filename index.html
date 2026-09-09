@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Portofino Store - Catálogo Digital</title>
 
     <!-- FAVICON -->
@@ -311,6 +311,7 @@
         }
         .btn-whatsapp:active { transform: scale(0.97); }
 
+        /* MODAL DE ZOOM OPTIMIZADO PARA MÓVIL (Pellizco y Arrastre) */
         .modal {
             display: none;
             position: fixed;
@@ -319,22 +320,32 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.92);
+            background-color: rgba(0, 0, 0, 0.95);
             justify-content: center;
             align-items: center;
-            padding: 10px;
-            backdrop-filter: blur(5px);
+            touch-action: none; /* Evita comportamientos extraños del navegador al hacer zoom/pinch */
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
         }
 
         .modal-img {
             max-width: 95%;
             max-height: 85%;
-            border-radius: 16px;
+            border-radius: 12px;
             object-fit: contain;
-            background: #0f0f12;
-            padding: 10px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            user-select: none;
+            -webkit-user-drag: none;
+            transition: transform 0.05s ease-out; /* Movimiento fluido al arrastrar */
+            will-change: transform;
         }
 
         .modal-close {
@@ -342,10 +353,10 @@
             top: 20px;
             right: 20px;
             color: white;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             cursor: pointer;
-            background: #27272a;
+            background: rgba(39, 39, 42, 0.8);
             width: 44px;
             height: 44px;
             border-radius: 50%;
@@ -353,6 +364,25 @@
             align-items: center;
             justify-content: center;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 101;
+            backdrop-filter: blur(4px);
+        }
+
+        .zoom-instructions {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: #cbd5e1;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            pointer-events: none;
+            z-index: 101;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            white-space: nowrap;
         }
     </style>
 </head>
@@ -487,10 +517,13 @@
         </div>
     </div>
 
-    <!-- MODAL DE ZOOM -->
-    <div id="imageModal" class="modal" onclick="closeZoom()">
-        <span class="modal-close">&times;</span>
-        <img class="modal-img" id="modalImage">
+    <!-- MODAL DE ZOOM INTERACTIVO (Móvil y Escritorio) -->
+    <div id="imageModal" class="modal" onclick="closeZoom(event)">
+        <span class="modal-close" onclick="closeZoom(event)">&times;</span>
+        <div class="modal-content-wrapper" id="modalWrapper">
+            <img class="modal-img" id="modalImage" alt="Zoom de imagen">
+        </div>
+        <div class="zoom-instructions">Doble toque o pellizca para hacer zoom</div>
     </div>
 
     <script>
@@ -498,11 +531,11 @@
 
         const productos = [
             // --- CINTURONES IMPORTADOS ---
-            { categoria: "cinturones", titulo: "Cinto Montblanc - Negro Elegante con Hebilla Oscura", descripcion: "Cinturón importado de alta calidad con hebilla metálica y detalle de la estrella.", precio: "$35,000", imagen: "cintos/Montblanc.webp" },
-            { categoria: "cinturones", titulo: "Cinto Diesel - Negro con Hebilla Metálica Dorada 'D'", descripcion: "Cinturón importado de cuero ecológico prémium con llamativa hebilla dorada ovalada.", precio: "$35,000", imagen: "cintos/Diesel.webp" },
-            { categoria: "cinturones", titulo: "Cinto Louis Vuitton - Monograma Negro con Hebilla LV Negra", descripcion: "Cinturón importado de diseño sofisticado con monograma clásico y hebilla oscura mate.", precio: "$35,000", imagen: "cintos/Louis Vuitton.webp" },
-            { categoria: "cinturones", titulo: "Cinto Calvin Klein - Negro Mate con Hebilla 'CK' Plateada", descripcion: "Cinturón importado minimalista con la clásica hebilla metálica de la marca.", precio: "$35,000", imagen: "cintos/Calvin Klein.webp" },
-            { categoria: "cinturones", titulo: "Cinto Burberry - Estampado Clásico Tartán con Hebilla Dorada", descripcion: "Cinturón importado con el tradicional diseño a cuadros de Burberry y detalles de lujo.", precio: "$35,000", imagen: "cintos/Burberry.webp" },
+            { categoria: "cinturones", titulo: "Cinto Montblanc - Negro Elegante con Hebilla Oscura", descripcion: "Cinturón importado de alta calidad con hebilla metálica y detalle de la estrella.", precio: "$25.000", imagen: "cintos/Montblanc.webp" },
+            { categoria: "cinturones", titulo: "Cinto Diesel - Negro con Hebilla Metálica Dorada 'D'", descripcion: "Cinturón importado de cuero ecológico prémium con llamativa hebilla dorada ovalada.", precio: "$25.000", imagen: "cintos/Diesel.webp" },
+            { categoria: "cinturones", titulo: "Cinto Louis Vuitton - Monograma Negro con Hebilla LV Negra", descripcion: "Cinturón importado de diseño sofisticado con monograma clásico y hebilla oscura mate.", precio: "$25.000", imagen: "cintos/Louis Vuitton.webp" },
+            { categoria: "cinturones", titulo: "Cinto Calvin Klein - Negro Mate con Hebilla 'CK' Plateada", descripcion: "Cinturón importado minimalista con la clásica hebilla metálica de la marca.", precio: "$25.000", imagen: "cintos/Calvin Klein.webp" },
+            { categoria: "cinturones", titulo: "Cinto Burberry - Estampado Clásico Tartán con Hebilla Dorada", descripcion: "Cinturón importado con el tradicional diseño a cuadros de Burberry y detalles de lujo.", precio: "$25.000", imagen: "cintos/Burberry.webp" },
 
             // --- SHORTS JORDAN ---
             { categoria: "shortsjordan", titulo: "Short Jordan - Blanco con Detalles Negros", descripcion: "Short deportivo importado blanco con franjas geométricas y logo Jumpman negro.", precio: "$30.000", imagen: "shortsjordan/jordanshort (1).webp" },
@@ -666,6 +699,7 @@
         }
 
         window.addEventListener("popstate", function(e) {
+            if (closeZoomModalOnBack()) return; // Si el modal de zoom estaba abierto, lo cierra con el botón "Atrás" del celu
             if (e.state && e.state.view) {
                 enSubmenuPerfumes = !!e.state.enSubmenu;
                 switchView(e.state.view, true);
@@ -749,16 +783,146 @@
             renderProducts(resultados);
         }
 
+        /* --- CONTROL DE ZOOM TÁCTIL Y GESTIÓN DE MODAL --- */
+        let scale = 1;
+        let panning = false;
+        let pointX = 0;
+        let pointY = 0;
+        let startX = 0;
+        let startY = 0;
+        let lastTouchEnd = 0;
+
         function openZoom(imgSrc) {
             const modal = document.getElementById("imageModal");
             const modalImg = document.getElementById("modalImage");
-            modal.style.display = "flex";
             modalImg.src = imgSrc;
+            modal.style.display = "flex";
+            resetZoomTransform();
+            
+            // Añade estado al historial para que al presionar "Atrás" en Android se cierre el zoom en vez de salir de la sección
+            history.pushState({ modalOpen: true }, "", "");
         }
 
-        function closeZoom() {
-            document.getElementById("imageModal").style.display = "none";
+        function closeZoom(event) {
+            if (event && event.target.id === 'modalImage' && scale > 1) return; // Si está haciendo zoom en la imagen, no cerrar por error
+            const modal = document.getElementById("imageModal");
+            if (modal.style.display === "flex") {
+                modal.style.display = "none";
+                // Si el modal se cerró por UI, quitamos el state extra si lo hubiera
+                if (history.state && history.state.modalOpen) {
+                    history.back();
+                }
+            }
         }
+
+        function closeZoomModalOnBack() {
+            const modal = document.getElementById("imageModal");
+            if (modal.style.display === "flex") {
+                modal.style.display = "none";
+                return true;
+            }
+            return false;
+        }
+
+        function resetZoomTransform() {
+            scale = 1;
+            pointX = 0;
+            pointY = 0;
+            updateTransform();
+        }
+
+        function updateTransform() {
+            const img = document.getElementById("modalImage");
+            img.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+        }
+
+        // Lógica avanzada para doble toque y arrastre fluido en dispositivos móviles
+        const modalWrapper = document.getElementById("modalWrapper");
+        const modalImg = document.getElementById("modalImage");
+
+        modalImg.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Soporte de doble toque (Double Tap) para hacer zoom rápido
+        modalImg.addEventListener('touchend', (e) => {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTouchEnd;
+            if (tapLength < 300 && tapLength > 0) {
+                // Doble toque detectado
+                if (scale === 1) {
+                    scale = 2.5;
+                } else {
+                    resetZoomTransform();
+                }
+                updateTransform();
+                e.preventDefault();
+            }
+            lastTouchEnd = currentTime;
+        });
+
+        // Arrastrar imagen cuando está ampliada
+        modalWrapper.addEventListener('mousedown', (e) => {
+            if (scale > 1) {
+                panning = true;
+                startX = e.clientX - pointX;
+                startY = e.clientY - pointY;
+                e.preventDefault();
+            }
+        });
+
+        modalWrapper.addEventListener('mousemove', (e) => {
+            if (!panning) return;
+            pointX = e.clientX - startX;
+            pointY = e.clientY - startY;
+            updateTransform();
+        });
+
+        modalWrapper.addEventListener('mouseup', () => { panning = false; });
+        modalWrapper.addEventListener('mouseleave', () => { panning = false; });
+
+        // Eventos táctiles para móviles (Touch Drag y Pinch to Zoom básico)
+        let initialDistance = null;
+
+        modalWrapper.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1 && scale > 1) {
+                panning = true;
+                startX = e.touches[0].clientX - pointX;
+                startY = e.touches[0].clientY - pointY;
+            } else if (e.touches.length === 2) {
+                panning = false;
+                initialDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+            }
+        }, { passive: true });
+
+        modalWrapper.addEventListener('touchmove', (e) => {
+            if (panning && e.touches.length === 1) {
+                pointX = e.touches[0].clientX - startX;
+                pointY = e.touches[0].clientY - startY;
+                updateTransform();
+            } else if (e.touches.length === 2 && initialDistance) {
+                const currentDistance = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                const factor = currentDistance / initialDistance;
+                scale = Math.min(Math.max(1, scale * factor), 4);
+                initialDistance = currentDistance;
+                updateTransform();
+            }
+        }, { passive: true });
+
+        modalWrapper.addEventListener('touchend', (e) => {
+            if (e.touches.length < 2) {
+                initialDistance = null;
+            }
+            if (e.touches.length === 0) {
+                panning = false;
+            }
+        });
     </script>
 </body>
 </html>
