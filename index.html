@@ -11,7 +11,7 @@
     <!-- OPEN GRAPH (Vista previa al compartir por WhatsApp o redes) -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Portofino Store - Catálogo Digital">
-    <meta property="og:description" content="Catálogo Urbano & Importados: Indumentaria, Vapers, Perfumes y más. ¡Pedí directo por WhatsApp!">
+    <meta property="og:description" content="Catálogo Urbano & Importados: Indumentaria, Vapers, Perfumes, Cinturones y más. ¡Pedí directo por WhatsApp!">
     <meta property="og:image" content="https://portofinostore.github.io/logo.png">
     <meta property="og:url" content="https://portofinostore.github.io/">
     <meta property="og:site_name" content="Portofino Store">
@@ -372,12 +372,20 @@
         <div class="container">
 
             <div class="search-container">
-                <input type="text" id="searchInput" class="search-input" placeholder="Buscar shorts, jordan, vapers, perfumes..." oninput="handleSearch(this.value)">
+                <input type="text" id="searchInput" class="search-input" placeholder="Buscar shorts, jordan, cinto, vapers..." oninput="handleSearch(this.value)">
             </div>
 
             <!-- MENÚ DE CATEGORÍAS PRINCIPALES -->
             <div id="categories-menu">
                 <div class="categories-grid">
+                    <div class="category-card" onclick="showCategory('cinturones')">
+                        <img src="cintos/Montblanc.webp" alt="Cinturones" class="category-thumb" loading="lazy" onerror="this.style.display='none'">
+                        <div class="category-info">
+                            <h2>Cinturones Importados</h2>
+                            <p>Modelos de marcas exclusivas (Montblanc, LV, Diesel, CK, Burberry)</p>
+                        </div>
+                    </div>
+
                     <div class="category-card" onclick="showCategory('shortsjordan')">
                         <img src="shortsjordan/jordanshort (1).webp" alt="Shorts Jordan" class="category-thumb" loading="lazy" onerror="this.style.display='none'">
                         <div class="category-info">
@@ -489,6 +497,13 @@
         const whatsappNumber = "5491132903865";
 
         const productos = [
+            // --- CINTURONES IMPORTADOS ---
+            { categoria: "cinturones", titulo: "Cinto Montblanc - Negro Elegante con Hebilla Oscura", descripcion: "Cinturón importado de alta calidad con hebilla metálica y detalle de la estrella.", precio: "$35,000", imagen: "cintos/Montblanc.webp" },
+            { categoria: "cinturones", titulo: "Cinto Diesel - Negro con Hebilla Metálica Dorada 'D'", descripcion: "Cinturón importado de cuero ecológico prémium con llamativa hebilla dorada ovalada.", precio: "$35,000", imagen: "cintos/Diesel.webp" },
+            { categoria: "cinturones", titulo: "Cinto Louis Vuitton - Monograma Negro con Hebilla LV Negra", descripcion: "Cinturón importado de diseño sofisticado con monograma clásico y hebilla oscura mate.", precio: "$35,000", imagen: "cintos/Louis Vuitton.webp" },
+            { categoria: "cinturones", titulo: "Cinto Calvin Klein - Negro Mate con Hebilla 'CK' Plateada", descripcion: "Cinturón importado minimalista con la clásica hebilla metálica de la marca.", precio: "$35,000", imagen: "cintos/Calvin Klein.webp" },
+            { categoria: "cinturones", titulo: "Cinto Burberry - Estampado Clásico Tartán con Hebilla Dorada", descripcion: "Cinturón importado con el tradicional diseño a cuadros de Burberry y detalles de lujo.", precio: "$35,000", imagen: "cintos/Burberry.webp" },
+
             // --- SHORTS JORDAN ---
             { categoria: "shortsjordan", titulo: "Short Jordan - Blanco con Detalles Negros", descripcion: "Short deportivo importado blanco con franjas geométricas y logo Jumpman negro.", precio: "$30.000", imagen: "shortsjordan/jordanshort (1).webp" },
             { categoria: "shortsjordan", titulo: "Short Jordan - Estampado Gráfico Blanco y Negro", descripcion: "Short deportivo importado con diseño urbano estampado y detalles en contraste.", precio: "$30.000", imagen: "shortsjordan/jordanshort (2).webp" },
@@ -572,7 +587,7 @@
             { categoria: "remeras", titulo: "Olympique de Marsella - Local (Blanca con cuello y detalles azules)", descripcion: "Casaca oficial importada titular clásica. Talles: S, M, L, XL, XXL.", precio: "$30.000", imagen: "remeras/casaca (23).webp" },
             { categoria: "remeras", titulo: "Selección de Portugal - Visita / Puma (Granate)", descripcion: "Casaca oficial importada alternativa en tono granate con detalles oscuros. Talles: S, M, L, XL, XXL.", precio: "$30.000", imagen: "remeras/casaca (24).webp" },
             { categoria: "remeras", titulo: "FC Barcelona - Blanca (Special Edition / Detalles dorados)", descripcion: "Casaca oficial importada blanca con escudo y detalles en tono dorado/amarillo. Talles: M, L, XXL.", precio: "$30.000", imagen: "remeras/casaca (25).webp" },
-            { categoria: "remeras", titulo: "Real Madrid - Local / Detalles Granates y cuello oscuro", descripcion: "Casaca oficial importada titular con vivos granates en los hombros. Talles: S, M, L, XL, XXL.", precio: "$30.000", imagen: "remeras/casaca (26).webp" },
+            { categoria: "remeras", titulo: "Real Madrid - Local / Details Granates y cuello oscuro", descripcion: "Casaca oficial importada titular con vivos granates en los hombros. Talles: S, M, L, XL, XXL.", precio: "$30.000", imagen: "remeras/casaca (26).webp" },
             { categoria: "remeras", titulo: "Inter de Milán - Local / Rayas Difuminadas (Azul y Negra)", descripcion: "Casaca oficial importada titular con diseño de bastones modernos difuminados. Talles: S, M, L, XL, XXL.", precio: "$30.000", imagen: "remeras/casaca (27).webp" },
 
             // --- PERFUMES ---
