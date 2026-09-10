@@ -111,6 +111,33 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
+        /* BANNER INFORMATIVO (ENVÍOS Y PAGOS) */
+        .info-banner {
+            background: rgba(22, 22, 26, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            padding: 14px 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.84rem;
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+
+        .info-item span {
+            font-size: 1rem;
+        }
+
         .page-wrapper {
             position: relative;
             max-width: 1150px;
@@ -124,7 +151,7 @@
         }
 
         .search-container {
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
 
         .search-input {
@@ -323,7 +350,7 @@
             background-color: rgba(0, 0, 0, 0.95);
             justify-content: center;
             align-items: center;
-            touch-action: none; /* Evita comportamientos extraños del navegador al hacer zoom/pinch */
+            touch-action: none;
             backdrop-filter: blur(8px);
         }
 
@@ -344,7 +371,7 @@
             object-fit: contain;
             user-select: none;
             -webkit-user-drag: none;
-            transition: transform 0.05s ease-out; /* Movimiento fluido al arrastrar */
+            transition: transform 0.05s ease-out;
             will-change: transform;
         }
 
@@ -401,6 +428,16 @@
     <div class="page-wrapper">
         <div class="container">
 
+            <!-- BANNER INFORMATIVO (UBICACIÓN, PAGOS Y ENVÍOS) -->
+            <div class="info-banner">
+                <div class="info-item">
+                    <span>📍</span> <strong>Localizados en Laferrere</strong> (Hacemos envíos zonales)
+                </div>
+                <div class="info-item">
+                    <span>💳</span> Aceptamos <strong>Efectivo</strong> y <strong>Mercado Pago</strong>
+                </div>
+            </div>
+
             <div class="search-container">
                 <input type="text" id="searchInput" class="search-input" placeholder="Buscar shorts, jordan, cinto, vapers..." oninput="handleSearch(this.value)">
             </div>
@@ -412,7 +449,7 @@
                         <img src="cintos/Montblanc.webp" alt="Cinturones" class="category-thumb" loading="lazy" onerror="this.style.display='none'">
                         <div class="category-info">
                             <h2>Cinturones Importados</h2>
-                            <p>Modelos de marcas exclusivas (Montblanc, LV, Diesel, CK, Burberry)</p>
+                            <p>Modelos de marcas exclusivas</p>
                         </div>
                     </div>
 
@@ -699,7 +736,7 @@
         }
 
         window.addEventListener("popstate", function(e) {
-            if (closeZoomModalOnBack()) return; // Si el modal de zoom estaba abierto, lo cierra con el botón "Atrás" del celu
+            if (closeZoomModalOnBack()) return;
             if (e.state && e.state.view) {
                 enSubmenuPerfumes = !!e.state.enSubmenu;
                 switchView(e.state.view, true);
@@ -798,17 +835,14 @@
             modalImg.src = imgSrc;
             modal.style.display = "flex";
             resetZoomTransform();
-            
-            // Añade estado al historial para que al presionar "Atrás" en Android se cierre el zoom en vez de salir de la sección
             history.pushState({ modalOpen: true }, "", "");
         }
 
         function closeZoom(event) {
-            if (event && event.target.id === 'modalImage' && scale > 1) return; // Si está haciendo zoom en la imagen, no cerrar por error
+            if (event && event.target.id === 'modalImage' && scale > 1) return;
             const modal = document.getElementById("imageModal");
             if (modal.style.display === "flex") {
                 modal.style.display = "none";
-                // Si el modal se cerró por UI, quitamos el state extra si lo hubiera
                 if (history.state && history.state.modalOpen) {
                     history.back();
                 }
@@ -836,7 +870,6 @@
             img.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
         }
 
-        // Lógica avanzada para doble toque y arrastre fluido en dispositivos móviles
         const modalWrapper = document.getElementById("modalWrapper");
         const modalImg = document.getElementById("modalImage");
 
@@ -844,12 +877,10 @@
             e.stopPropagation();
         });
 
-        // Soporte de doble toque (Double Tap) para hacer zoom rápido
         modalImg.addEventListener('touchend', (e) => {
             const currentTime = new Date().getTime();
             const tapLength = currentTime - lastTouchEnd;
             if (tapLength < 300 && tapLength > 0) {
-                // Doble toque detectado
                 if (scale === 1) {
                     scale = 2.5;
                 } else {
@@ -861,7 +892,6 @@
             lastTouchEnd = currentTime;
         });
 
-        // Arrastrar imagen cuando está ampliada
         modalWrapper.addEventListener('mousedown', (e) => {
             if (scale > 1) {
                 panning = true;
@@ -881,7 +911,6 @@
         modalWrapper.addEventListener('mouseup', () => { panning = false; });
         modalWrapper.addEventListener('mouseleave', () => { panning = false; });
 
-        // Eventos táctiles para móviles (Touch Drag y Pinch to Zoom básico)
         let initialDistance = null;
 
         modalWrapper.addEventListener('touchstart', (e) => {
