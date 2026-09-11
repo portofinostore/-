@@ -552,7 +552,6 @@
             conjuntosDeFutbol: true
         };
 
-        // Lista de categorías vinculadas a su sección (hombre, mujer, perfumes, vapers)
         const listaCategorias = [
             // SECCIÓN HOMBRE
             { key: "cinturones", seccion: "hombre", titulo: "Cinturones Importados", desc: "Modelos de marcas exclusivas", img: "cintos/Montblanc.webp", accion: "showCategory('cinturones')" },
@@ -563,10 +562,10 @@
             { key: "remeras", seccion: "hombre", titulo: "Camisetas De Futbol", desc: "Nuevas casacas y conjuntos oficiales importados", img: "remeras/casaca (1).webp", accion: "showCategory('remeras')" },
             { key: "conjuntosDeFutbol", seccion: "hombre", titulo: "Conjuntos De Futbol", desc: "Conjuntos retro y actuales de equipos internacionales", img: "Conjuntos De Futbol/Tottenham Hotspur.webp", accion: "showCategory('conjuntosDeFutbol')" },
 
-            // SECCIÓN MUJER (Vacía inicialmente, lista para productos de mujer)
+            // SECCIÓN VAPERS
             { key: "vapers", seccion: "vapers", titulo: "Vapers y Pods", desc: "Elfbar Ice King, BC 15K e Ignite V250 Pro", img: "vapers/vaper (1).webp", accion: "showCategory('vapers')" },
             
-            // SECCIÓN PERFUMERÍA (Fragancias y Body Splash como categorías independientes)
+            // SECCIÓN PERFUMERÍA
             { key: "perfumes", seccion: "perfumes", titulo: "Fragancias árabes y Perfumes", desc: "Fragancias importadas para Hombre, Mujer y Unisex", img: "perfumes/Lattafa - Bade'e Al Oud (Oud for Glory).webp", accion: "showPerfumeSubmenu()" },
             { key: "bodysplash", seccion: "perfumes", titulo: "Body Splash", desc: "Lociones corporales y fragancias frescas", img: "bodysplash/bodysplash (1).webp", accion: "showCategory('bodysplash')" }
         ];
@@ -726,7 +725,7 @@
             { categoria: "conjuntosDeFutbol", titulo: "Manchester United Clásico", descripcion: "Conjunto importado clásico.", precio: "$45.000", imagen: "Conjuntos De Futbol/Manchester United Clásico.webp" },
             { categoria: "conjuntosDeFutbol", titulo: "Real Madrid Retro (Gris y Verde - Estilo Trefoil)", descripcion: "Conjunto importado retro con estilo Trefoil.", precio: "$45.000", imagen: "Conjuntos De Futbol/Real Madrid Retro (Gris y Verde - Estilo Trefoil).webp" },
 
-            // --- PERFUMES ---
+            // --- PERFUMES HOMBRE ---
             { categoria: "perfumes-hombre", titulo: "Afnan - Historic Olmeda", descripcion: "Eau de Parfum 100ml. Fragancia amaderada especiada, sofisticada y de gran estela.", precio: "$48.000", imagen: "perfumes/Afnan - Historic Olmeda.webp" },
             { categoria: "perfumes-hombre", titulo: "Al Haramain - Amber Oud Bleu Edition", descripcion: "Eau de Parfum 100ml. Fragancia fresca, azul y amaderada con excelente fijación.", precio: "$48.000", imagen: "perfumes/Al Haramain - Amber Oud Bleu Edition.webp" },
             { categoria: "perfumes-hombre", titulo: "Al Haramain - Amber Oud Carbon Edition", descripcion: "Eau de Parfum 100ml. Fragancia masculina aromática, amaderada y elegante.", precio: "$48.000", imagen: "perfumes/Al Haramain - Amber Oud Carbon Edition.webp" },
@@ -743,6 +742,7 @@
             { categoria: "perfumes-hombre", titulo: "Lattafa - Asad Zanzibar", descripcion: "Eau de Parfum 100ml. Fragancia especiada, amaderada y salada con un toque tropical.", precio: "$48.000", imagen: "perfumes/Lattafa - Asad Zanzibar.webp" },
             { categoria: "perfumes-hombre", titulo: "Lattafa - Asad", descripcion: "Eau de Parfum 100ml. Fragancia ambarina especiada intensa con notas de pimienta negra y piña.", precio: "$48.000", imagen: "perfumes/Lattafa - Asad.webp" },
 
+            // --- PERFUMES MUJER ---
             { categoria: "perfumes-mujer", titulo: "Afnan - Historic Doria", descripcion: "Eau de Parfum 100ml. Fragancia floral elegante y dulce para mujer.", precio: "$48.000", imagen: "perfumes/Afnan - Historic Doria.webp" },
             { categoria: "perfumes-mujer", titulo: "Al Haramain - Amber Oud White Edition", descripcion: "Eau de Parfum 100ml. Fragancia floral y chipre, limpia, fresca y lujosa.", precio: "$48.000", imagen: "perfumes/Al Haramain - Amber Oud White Edition.webp" },
             { categoria: "perfumes-mujer", titulo: "Bharara - King", descripcion: "Eau de Parfum 100ml. Fragancia gourmet dulce, intensa y muy cautivadora.", precio: "$48.000", imagen: "perfumes/Bharara - King.webp" },
@@ -757,6 +757,7 @@
             { categoria: "perfumes-mujer", titulo: "Lattafa - Yara Elixir", descripcion: "Eau de Parfum 100ml. Fragancia floral ambarina dulce y cremosa.", precio: "$48.000", imagen: "perfumes/Lattafa - Yara Elixir.webp" },
             { categoria: "perfumes-mujer", titulo: "Lattafa - Yara", descripcion: "Eau de Parfum 100ml. Icónica fragancia dulce con orquídea, helado de fresa y notas atalcadas.", precio: "$48.000", imagen: "perfumes/Lattafa - Yara.webp" },
 
+            // --- PERFUMES UNISEX / ÁRABES ---
             { categoria: "perfumes-unisex", titulo: "Al Haramain - Amber Oud Dubai Night", descripcion: "Extrait de Parfum 75ml. Fragancia oriental amaderada intensa y sofisticada.", precio: "$48.000", imagen: "perfumes/Al Haramain - Amber Oud Dubai Night.webp" },
             { categoria: "perfumes-unisex", titulo: "Al Haramain - Amber Oud Gold Edition (2)", descripcion: "Eau de Parfum 120ml. Presentación grande de la clásica fragancia frutal y avainillada.", precio: "$48.000", imagen: "perfumes/Al Haramain - Amber Oud Gold Edition (2).webp" },
             { categoria: "perfumes-unisex", titulo: "Al Haramain - Amber Oud Gold Edition", descripcion: "Eau de Parfum 60ml. Fragancia frutal, dulce, avainillada y ambarina.", precio: "$48.000", imagen: "perfumes/Al Haramain - Amber Oud Gold Edition.webp" },
@@ -1006,7 +1007,6 @@
             if (e.touches.length === 0) { panning = false; }
         });
 
-        // Inicializar arrancando en la sección Hombre al cargar
         window.addEventListener("DOMContentLoaded", () => {
             filtrarSeccion('hombre');
         });
