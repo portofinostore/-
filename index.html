@@ -175,6 +175,39 @@
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
         }
 
+        /* PESTAÑAS PRINCIPALES / MUNDOS */
+        .worlds-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            scrollbar-width: none;
+        }
+        .worlds-tabs::-webkit-scrollbar { display: none; }
+
+        .world-tab-btn {
+            background: rgba(22, 22, 26, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            padding: 10px 16px;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .world-tab-btn.active {
+            background: #f8fafc;
+            color: #09090b;
+            border-color: #f8fafc;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+        }
+
         .categories-grid {
             display: flex;
             flex-direction: column;
@@ -442,81 +475,17 @@
                 <input type="text" id="searchInput" class="search-input" placeholder="Buscar shorts, jordan, cinto, vapers..." oninput="handleSearch(this.value)">
             </div>
 
-            <!-- MENÚ DE CATEGORÍAS PRINCIPALES -->
+            <!-- BOTONES DE MUNDOS / PESTAÑAS PRINCIPALES (Sin la opción "Todos") -->
+            <div class="worlds-tabs" id="worldsTabsContainer">
+                <button class="world-tab-btn active" onclick="filtrarMundo('indumentaria')">👕 Indumentaria</button>
+                <button class="world-tab-btn" onclick="filtrarMundo('perfumes')">💎 Perfumería</button>
+                <button class="world-tab-btn" onclick="filtrarMundo('vapers')">💨 Vapers</button>
+            </div>
+
+            <!-- MENÚ DE CATEGORÍAS PRINCIPALES (DINÁMICO SEGÚN CONFIGURACIÓN Y MUNDO) -->
             <div id="categories-menu">
-                <div class="categories-grid">
-                    <div class="category-card" onclick="showCategory('cinturones')">
-                        <img src="cintos/Montblanc.webp" alt="Cinturones" class="category-thumb" loading="lazy" onerror="this.style.display='none'">
-                        <div class="category-info">
-                            <h2>Cinturones Importados</h2>
-                            <p>Modelos de marcas exclusivas</p>
-                        </div>
-                    </div>
-
-                    <div class="category-card" onclick="showCategory('shortsjordan')">
-                        <img src="shortsjordan/jordanshort (1).webp" alt="Shorts Jordan" class="category-thumb" loading="lazy" onerror="this.style.display='none'">
-                        <div class="category-info">
-                            <h2>Shorts Jordan</h2>
-                            <p>Shorts deportivos importados con diseños urbanos</p>
-                        </div>
-                    </div>
-
-                    <div class="category-card" onclick="showCategory('jordan')">
-                        <img src="Jordan/jordan (1).webp" alt="Jordan" class="category-thumb" loading="lazy" onerror="this.style.display='none'">
-                        <div class="category-info">
-                            <h2>Conjuntos Jordan</h2>
-                            <p>Remera y short importados estilo urbano / básquet</p>
-                        </div>
-                    </div>
-
-                    <div class="category-card" onclick="showCategory('addidas')">
-                        <img src="Addidas/adidas (1).webp" alt="Addidas" class="category-thumb" loading="lazy" onerror="this.style.display='none'">
-                        <div class="category-info">
-                            <h2>Conjuntos Addidas</h2>
-                            <p>Remera clásica con tiras y short deportivo</p>
-                        </div>
-                    </div>
-
-                    <div class="category-card" onclick="showCategory('lacoste')">
-                        <img src="lacoste/lacoste (1).webp" alt="Lacoste" class="category-thumb" loading="lazy" onerror="this.style.display='none'">
-                        <div class="category-info">
-                            <h2>Conjuntos Lacoste</h2>
-                            <p>Remera y short importados con diseño exclusivo</p>
-                        </div>
-                    </div>
-
-                    <div class="category-card" onclick="showCategory('vapers')">
-                        <img src="vapers/vaper (1).webp" alt="Vapers" class="category-thumb" loading="lazy" onerror="this.style.display='none'">
-                        <div class="category-info">
-                            <h2>Vapers y Pods</h2>
-                            <p>Elfbar Ice King, BC 15K e Ignite V250 Pro</p>
-                        </div>
-                    </div>
-
-                    <div class="category-card" onclick="showCategory('bodysplash')">
-                        <img src="bodysplash/bodysplash (1).webp" alt="Body Splash" class="category-thumb" loading="lazy" onerror="this.style.display='none'">
-                        <div class="category-info">
-                            <h2>Body Splash</h2>
-                            <p>Lociones corporales y fragancias frescas de uso diario</p>
-                        </div>
-                    </div>
-
-                    <!-- TARJETA DE FRAGANCIAS -->
-                    <div class="category-card" onclick="showPerfumeSubmenu()">
-                        <img src="perfumes/Lattafa - Bade'e Al Oud (Oud for Glory).webp" alt="Fragancias" class="category-thumb" loading="lazy" onerror="this.style.display='none'">
-                        <div class="category-info">
-                            <h2>Fragancias árabes</h2>
-                            <p>Perfumes importados y árabes (Hombre, Mujer y Unisex)</p>
-                        </div>
-                    </div>
-
-                    <div class="category-card" onclick="showCategory('remeras')">
-                        <img src="remeras/casaca (1).webp" alt="Conjuntos de Fútbol" class="category-thumb" loading="lazy" onerror="this.style.display='none'">
-                        <div class="category-info">
-                            <h2>Conjuntos De Futbol</h2>
-                            <p>Nuevas casacas y conjuntos oficiales importados</p>
-                        </div>
-                    </div>
+                <div class="categories-grid" id="categories-grid-container">
+                    <!-- Se carga automáticamente mediante JS -->
                 </div>
             </div>
 
@@ -566,6 +535,77 @@
     <script>
         const whatsappNumber = "5491132903865";
 
+        // =========================================================================
+        // CONFIGURACIÓN DE SECCIONES: Cambiá true por false para ocultar/mostrar
+        // =========================================================================
+        const configCategorias = {
+            cinturones: false,
+            shortsjordan: true,
+            jordan: true,
+            addidas: true,
+            lacoste: true,
+            vapers: true,
+            bodysplash: true,
+            perfumes: true,
+            remeras: true,
+            conjuntosDeFutbol: true
+        };
+
+        // Lista de categorías vinculadas a su "mundo" correspondiente
+        const listaCategorias = [
+            { key: "cinturones", mundo: "indumentaria", titulo: "Cinturones Importados", desc: "Modelos de marcas exclusivas", img: "cintos/Montblanc.webp", accion: "showCategory('cinturones')" },
+            { key: "shortsjordan", mundo: "indumentaria", titulo: "Shorts Jordan", desc: "Shorts deportivos importados con diseños urbanos", img: "shortsjordan/jordanshort (1).webp", accion: "showCategory('shortsjordan')" },
+            { key: "jordan", mundo: "indumentaria", titulo: " Jordan", desc: "Remera y short importados estilo urbano / básquet", img: "Jordan/jordan (1).webp", accion: "showCategory('jordan')" },
+            { key: "addidas", mundo: "indumentaria", titulo: " Addidas", desc: "Remera clásica con tiras y short deportivo", img: "Addidas/adidas (1).webp", accion: "showCategory('addidas')" },
+            { key: "lacoste", mundo: "indumentaria", titulo: " Lacoste", desc: "Remera y short importados con diseño exclusivo", img: "lacoste/lacoste (1).webp", accion: "showCategory('lacoste')" },
+            { key: "remeras", mundo: "indumentaria", titulo: "Camisetas De Futbol", desc: "Nuevas casacas y conjuntos oficiales importados", img: "remeras/casaca (1).webp", accion: "showCategory('remeras')" },
+            { key: "conjuntosDeFutbol", mundo: "indumentaria", titulo: "Conjuntos De Futbol", desc: "Conjuntos retro y actuales de equipos internacionales", img: "Conjuntos De Futbol/Tottenham Hotspur.webp", accion: "showCategory('conjuntosDeFutbol')" },
+            
+            { key: "vapers", mundo: "vapers", titulo: "Vapers y Pods", desc: "Elfbar Ice King, BC 15K e Ignite V250 Pro", img: "vapers/vaper (1).webp", accion: "showCategory('vapers')" },
+            
+            { key: "bodysplash", mundo: "perfumes", titulo: "Body Splash", desc: "Lociones corporales y fragancias frescas de uso diario", img: "bodysplash/bodysplash (1).webp", accion: "showCategory('bodysplash')" },
+            { key: "perfumes", mundo: "perfumes", titulo: "Fragancias árabes", desc: "Perfumes importados y árabes (Hombre, Mujer y Unisex)", img: "perfumes/Lattafa - Bade'e Al Oud (Oud for Glory).webp", accion: "showPerfumeSubmenu()" }
+        ];
+
+        // Arranca por defecto en el primer mundo ("indumentaria")
+        let mundoActual = 'indumentaria';
+
+        // Función para cambiar de mundo mediante las pestañas superiores
+        function filtrarMundo(mundo) {
+            mundoActual = mundo;
+            
+            // Actualizar clases activas en los botones
+            document.querySelectorAll('.world-tab-btn').forEach(btn => btn.classList.remove('active'));
+            event && event.currentTarget && event.currentTarget.classList.add('active');
+
+            renderCategoriasMenu();
+        }
+
+        // Función para renderizar el menú principal respetando los true/false y el mundo seleccionado
+        function renderCategoriasMenu() {
+            const gridContainer = document.getElementById("categories-grid-container");
+            if (!gridContainer) return;
+            gridContainer.innerHTML = "";
+
+            listaCategorias.forEach(cat => {
+                if (configCategorias[cat.key]) {
+                    if (cat.mundo === mundoActual) {
+                        const card = document.createElement("div");
+                        card.className = "category-card";
+                        card.setAttribute("onclick", cat.accion);
+                        card.innerHTML = `
+                            <img src="${cat.img}" alt="${cat.titulo}" class="category-thumb" loading="lazy" onerror="this.style.display='none'">
+                            <div class="category-info">
+                                <h2>${cat.titulo}</h2>
+                                <p>${cat.desc}</p>
+                            </div>
+                        `;
+                        gridContainer.appendChild(card);
+                    }
+                }
+            });
+        }
+
         const productos = [
             // --- CINTURONES IMPORTADOS ---
             { categoria: "cinturones", titulo: "Cinto Montblanc - Negro Elegante con Hebilla Oscura", descripcion: "Cinturón importado de alta calidad con hebilla metálica y detalle de la estrella.", precio: "$25.000", imagen: "cintos/Montblanc.webp" },
@@ -589,7 +629,7 @@
             { categoria: "shortsjordan", titulo: "Short Jordan - Rojo Fuego", descripcion: "Short deportivo rojo intenso con detalles negros en los laterales.", precio: "$30.000", imagen: "shortsjordan/jordanshort (14).webp" },
             { categoria: "shortsjordan", titulo: "Short Jordan - Turquesa y Verde", descripcion: "Short deportivo con combinación de tonos turquesa, verde y detalles oscuros.", precio: "$30.000", imagen: "shortsjordan/jordanshort (15).webp" },
 
-            // --- CONJUNTOS JORDAN ---
+            // ---  JORDAN ---
             { categoria: "jordan", titulo: "Conjunto Jordan - Negro y Blanco", descripcion: "Remera negra con gran logotipo Jumpman blanco y short deportivo con detalles geométricos.", precio: "$45.000", imagen: "Jordan/jordan (1).webp" },
             { categoria: "jordan", titulo: "Conjunto Jordan - Rojo y Negro", descripcion: "Remera roja con diseño Jumpman negro y short deportivo negro con franjas rojas.", precio: "$45.000", imagen: "Jordan/jordan (2).webp" },
             { categoria: "jordan", titulo: "Conjunto Jordan - Blanco y Negro", descripcion: "Remera blanca con silueta Jumpman negra y short deportivo negro a juego.", precio: "$45.000", imagen: "Jordan/jordan (3).webp" },
@@ -599,12 +639,16 @@
             { categoria: "addidas", titulo: "Conjunto Addidas - Blanco con Negro", descripcion: "Remera deportiva blanca con diseño frontal y short negro con tiras blancas.", precio: "$45.000", imagen: "Addidas/adidas (2).webp" },
             { categoria: "addidas", titulo: "Conjunto Addidas - Rojo y Negro", descripcion: "Remera roja con diseño clásico y short deportivo negro con tiras blancas.", precio: "$45.000", imagen: "Addidas/adidas (3).webp" },
 
-            // --- CONJUNTOS LACOSTE ---
+            // --- LACOSTE ---
             { categoria: "lacoste", titulo: "Conjunto Lacoste - Blanco y Negro", descripcion: "Remera con cierre en el cuello, diseño de cocodrilo gigante y short deportivo negro.", precio: "$45.000", imagen: "lacoste/lacoste (1).webp" },
             { categoria: "lacoste", titulo: "Conjunto Lacoste - Gris Oscuro", descripcion: "Remera con cierre en el cuello, diseño de cocodrilo gigante y short deportivo a juego.", precio: "$45.000", imagen: "lacoste/lacoste (2).webp" },
             { categoria: "lacoste", titulo: "Conjunto Lacoste - Rojo y Negro", descripcion: "Remera roja con cuello y detalles negros con cierre, short deportivo negro con detalles rojos.", precio: "$45.000", imagen: "lacoste/lacoste (3).webp" },
             { categoria: "lacoste", titulo: "Conjunto Lacoste - Negro con Detalles Blancos", descripcion: "Remera negra con diseño de cocodrilo en contraste, cuello blanco y short negro.", precio: "$45.000", imagen: "lacoste/lacoste (4).webp" },
-
+            { categoria: "lacoste", titulo: "Chomba Lacoste Azul Marina Oscuro", descripcion: "Chomba Lacoste importada en color azul marino oscuro.", precio: "$30.000", imagen: "lacoste/Chomba Lacoste Azul Marina Oscuro.webp" },
+            { categoria: "lacoste", titulo: "Chomba Lacoste Blanca", descripcion: "Chomba Lacoste importada clásica en color blanco.", precio: "$30.000", imagen: "lacoste/Chomba Lacoste Blanca.webp" },
+            { categoria: "lacoste", titulo: "Chomba Lacoste Gris Oscuro", descripcion: "Chomba Lacoste importada en color gris oscuro.", precio: "$30.000", imagen: "lacoste/Chomba Lacoste Gris Oscuro.webp" },
+            { categoria: "lacoste", titulo: "Chomba Lacoste Marrón Taupe", descripcion: "Chomba Lacoste importada en color marrón taupe.", precio: "$30.000", imagen: "lacoste/Chomba Lacoste Marrón Taupe.webp" },
+            { categoria: "lacoste", titulo: "Chomba Lacoste Negra", descripcion: "Chomba Lacoste importada clásica en color negro.", precio: "$30.000", imagen: "lacoste/Chomba Lacoste Negra.webp" },
             // --- VAPERS ---
             { categoria: "vapers", titulo: "Elfbar Ice King 40K Puff", descripcion: "Pod descartable de alta duración. Gran variedad de sabores frescos e intensos.", precio: "$38.500", imagen: "vapers/vaper (1).webp" },
             { categoria: "vapers", titulo: "Elfbar Ice King 40K Puff", descripcion: "Pod descartable de alta duración. Gran variedad de sabores frescos e intensos.", precio: "$38.500", imagen: "vapers/vaper (2).webp" },
@@ -631,7 +675,7 @@
             { categoria: "bodysplash", titulo: "Body Splash Victoria's Secret - Midnight Bloom", descripcion: "Fragancia corporal de 250 ml / 8.4 fl oz. Floral oscuro y cremoso.", precio: "$25.000", imagen: "bodysplash/bodysplash (7).webp" },
             { categoria: "bodysplash", titulo: "Body Splash Victoria's Secret - Pear Glacé", descripcion: "Fragancia corporal de 250 ml / 8.4 fl oz. Notas de pera azucarada.", precio: "$25.000", imagen: "bodysplash/bodysplash (8).webp" },
 
-            // --- CONJUNTOS DE FÚTBOL ---
+            // --- CAMISETAS DE FÚTBOL ---
             { categoria: "remeras", titulo: "AS Roma - Local Special Edition (Granate y Naranja)", descripcion: "Casaca oficial importada local con detalles en naranja. Talles: XL.", precio: "$30.000", imagen: "remeras/casaca (1).webp" },
             { categoria: "remeras", titulo: "FC Barcelona - Special Edition (Azul y Grana con detalles)", descripcion: "Casaca oficial importada con diseño especial. Talles: M, L, XXL.", precio: "$30.000", imagen: "remeras/casaca (2).webp" },
             { categoria: "remeras", titulo: "Real Madrid - Local Blanca (Emirates Fly Better)", descripcion: "Casaca oficial importada titular blanca. Talles: M, L, XL, XXL.", precio: "$30.000", imagen: "remeras/casaca (3).webp" },
@@ -659,6 +703,19 @@
             { categoria: "remeras", titulo: "FC Barcelona - Blanca (Special Edition / Detalles dorados)", descripcion: "Casaca oficial importada blanca con escudo y detalles en tono dorado/amarillo. Talles: M, L, XXL.", precio: "$30.000", imagen: "remeras/casaca (25).webp" },
             { categoria: "remeras", titulo: "Real Madrid - Local / Details Granates y cuello oscuro", descripcion: "Casaca oficial importada titular con vivos granates en los hombros. Talles: S, M, L, XL, XXL.", precio: "$30.000", imagen: "remeras/casaca (26).webp" },
             { categoria: "remeras", titulo: "Inter de Milán - Local / Rayas Difuminadas (Azul y Negra)", descripcion: "Casaca oficial importada titular con diseño de bastones modernos difuminados. Talles: S, M, L, XL, XXL.", precio: "$30.000", imagen: "remeras/casaca (27).webp" },
+
+            // --- CONJUNTOS DE FÚTBOL ---
+            { categoria: "conjuntosDeFutbol", titulo: "Tottenham Hotspur", descripcion: "Conjunto importado de fútbol.", precio: "$45.000", imagen: "Conjuntos De Futbol/Tottenham Hotspur.webp" },
+            { categoria: "conjuntosDeFutbol", titulo: "Manchester United Retro", descripcion: "Conjunto importado estilo retro.", precio: "$45.000", imagen: "Conjuntos De Futbol/Manchester United Retro.webp" },
+            { categoria: "conjuntosDeFutbol", titulo: "Olympique de Marsella", descripcion: "Conjunto importado de fútbol.", precio: "$45.000", imagen: "Conjuntos De Futbol/Olympique de Marsella.webp" },
+            { categoria: "conjuntosDeFutbol", titulo: "Arsenal Retro", descripcion: "Conjunto importado estilo retro.", precio: "$45.000", imagen: "Conjuntos De Futbol/Arsenal Retro.webp" },
+            { categoria: "conjuntosDeFutbol", titulo: "Chelsea", descripcion: "Conjunto importado de fútbol.", precio: "$45.000", imagen: "Conjuntos De Futbol/Chelsea.webp" },
+            { categoria: "conjuntosDeFutbol", titulo: "Flamengo Retro", descripcion: "Conjunto importado estilo retro.", precio: "$45.000", imagen: "Conjuntos De Futbol/Flamengo Retro.webp" },
+            { categoria: "conjuntosDeFutbol", titulo: "Boca Juniors Retro", descripcion: "Conjunto importado estilo retro.", precio: "$45.000", imagen: "Conjuntos De Futbol/Boca Juniors Retro.webp" },
+            { categoria: "conjuntosDeFutbol", titulo: "Liverpool", descripcion: "Conjunto importado de fútbol.", precio: "$45.000", imagen: "Conjuntos De Futbol/Liverpool.webp" },
+            { categoria: "conjuntosDeFutbol", titulo: "Manchester City", descripcion: "Conjunto importado de fútbol.", precio: "$45.000", imagen: "Conjuntos De Futbol/Manchester City.webp" },
+            { categoria: "conjuntosDeFutbol", titulo: "Manchester United Clásico", descripcion: "Conjunto importado clásico.", precio: "$45.000", imagen: "Conjuntos De Futbol/Manchester United Clásico.webp" },
+            { categoria: "conjuntosDeFutbol", titulo: "Real Madrid Retro (Gris y Verde - Estilo Trefoil)", descripcion: "Conjunto importado retro con estilo Trefoil.", precio: "$45.000", imagen: "Conjuntos De Futbol/Real Madrid Retro (Gris y Verde - Estilo Trefoil).webp" },
 
             // --- PERFUMES ---
             { categoria: "perfumes-hombre", titulo: "Afnan - Historic Olmeda", descripcion: "Eau de Parfum 100ml. Fragancia amaderada especiada, sofisticada y de gran estela.", precio: "$48.000", imagen: "perfumes/Afnan - Historic Olmeda.webp" },
@@ -713,13 +770,16 @@
             const categoriesMenu = document.getElementById("categories-menu");
             const subcategoriesView = document.getElementById("subcategories-view");
             const catalogView = document.getElementById("catalog-view");
+            const worldsTabs = document.getElementById("worldsTabsContainer");
 
             categoriesMenu.style.display = "none";
             subcategoriesView.style.display = "none";
             catalogView.style.display = "none";
+            if (worldsTabs) worldsTabs.style.display = "none";
 
             if (viewName === "categories") {
                 categoriesMenu.style.display = "block";
+                if (worldsTabs) worldsTabs.style.display = "flex";
                 enSubmenuPerfumes = false;
                 document.getElementById("searchInput").value = "";
             } else if (viewName === "subcategories") {
@@ -951,6 +1011,11 @@
             if (e.touches.length === 0) {
                 panning = false;
             }
+        });
+
+        // Inicializar menú al cargar la página (empieza mostrando Indumentaria)
+        window.addEventListener("DOMContentLoaded", () => {
+            renderCategoriasMenu();
         });
     </script>
 </body>
