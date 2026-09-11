@@ -175,7 +175,7 @@
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
         }
 
-        /* PESTAÑAS PRINCIPALES / MUNDOS */
+        /* PESTAÑAS PRINCIPALES / MUNDOS EN LA BARRA */
         .worlds-tabs {
             display: flex;
             gap: 8px;
@@ -212,6 +212,19 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
+        }
+
+        .subcategory-heading {
+            color: #f8fafc;
+            font-size: 1rem;
+            margin: 22px 0 10px;
+            padding-left: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .subcategory-heading:first-child {
+            margin-top: 0;
         }
 
         .category-card {
@@ -371,7 +384,7 @@
         }
         .btn-whatsapp:active { transform: scale(0.97); }
 
-        /* MODAL DE ZOOM OPTIMIZADO PARA MÓVIL (Pellizco y Arrastre) */
+        /* MODAL DE ZOOM OPTIMIZADO PARA MÓVIL */
         .modal {
             display: none;
             position: fixed;
@@ -475,22 +488,23 @@
                 <input type="text" id="searchInput" class="search-input" placeholder="Buscar shorts, jordan, cinto, vapers..." oninput="handleSearch(this.value)">
             </div>
 
-            <!-- BOTONES DE MUNDOS / PESTAÑAS PRINCIPALES (Sin la opción "Todos") -->
+            <!-- BARRA DE SECCIONES PRINCIPALES (HOMBRE Y MUJER SEPARADOS) -->
             <div class="worlds-tabs" id="worldsTabsContainer">
-                <button class="world-tab-btn active" onclick="filtrarMundo('indumentaria')">👕 Indumentaria</button>
-                <button class="world-tab-btn" onclick="filtrarMundo('perfumes')">💎 Perfumería</button>
-                <button class="world-tab-btn" onclick="filtrarMundo('vapers')">💨 Vapers</button>
+                <button class="world-tab-btn active" onclick="filtrarSeccion('hombre')">👕 Hombre</button>
+                <button class="world-tab-btn" onclick="filtrarSeccion('mujer')">👗 Mujer</button>
+                <button class="world-tab-btn" onclick="filtrarSeccion('perfumes')">💎 Perfumería</button>
+                <button class="world-tab-btn" onclick="filtrarSeccion('vapers')">💨 Vapers</button>
             </div>
 
-            <!-- MENÚ DE CATEGORÍAS PRINCIPALES (DINÁMICO SEGÚN CONFIGURACIÓN Y MUNDO) -->
+            <!-- MENÚ DE CATEGORÍAS PRINCIPALES (DINÁMICO SEGÚN LA SECCIÓN) -->
             <div id="categories-menu">
                 <div class="categories-grid" id="categories-grid-container">
                     <!-- Se carga automáticamente mediante JS -->
                 </div>
             </div>
 
-            <!-- SUBCATEGORÍAS DE PERFUMES -->
-            <div id="subcategories-view" class="subcategories-section">
+            <!-- SUBCATEGORÍAS DE PERFUMERÍA -->
+            <div id="subcategories-perfumes-view" class="subcategories-section">
                 <button class="btn-back" onclick="goBackFromSubmenu()">Volver a Categorías</button>
                 <div class="categories-grid">
                     <div class="category-card" onclick="showCategory('perfumes-hombre')">
@@ -523,7 +537,7 @@
         </div>
     </div>
 
-    <!-- MODAL DE ZOOM INTERACTIVO (Móvil y Escritorio) -->
+    <!-- MODAL DE ZOOM INTERACTIVO -->
     <div id="imageModal" class="modal" onclick="closeZoom(event)">
         <span class="modal-close" onclick="closeZoom(event)">&times;</span>
         <div class="modal-content-wrapper" id="modalWrapper">
@@ -536,10 +550,10 @@
         const whatsappNumber = "5491132903865";
 
         // =========================================================================
-        // CONFIGURACIÓN DE SECCIONES: Cambiá true por false para ocultar/mostrar
+        // CONFIGURACIÓN DE SECCIONES
         // =========================================================================
         const configCategorias = {
-            cinturones: false,
+            cinturones: true,
             shortsjordan: true,
             jordan: true,
             addidas: true,
@@ -551,45 +565,46 @@
             conjuntosDeFutbol: true
         };
 
-        // Lista de categorías vinculadas a su "mundo" correspondiente
+        // Lista de categorías vinculadas a su sección (hombre, mujer, perfumes, vapers)
         const listaCategorias = [
-            { key: "cinturones", mundo: "indumentaria", titulo: "Cinturones Importados", desc: "Modelos de marcas exclusivas", img: "cintos/Montblanc.webp", accion: "showCategory('cinturones')" },
-            { key: "shortsjordan", mundo: "indumentaria", titulo: "Shorts Jordan", desc: "Shorts deportivos importados con diseños urbanos", img: "shortsjordan/jordanshort (1).webp", accion: "showCategory('shortsjordan')" },
-            { key: "jordan", mundo: "indumentaria", titulo: " Jordan", desc: "Remera y short importados estilo urbano / básquet", img: "Jordan/jordan (1).webp", accion: "showCategory('jordan')" },
-            { key: "addidas", mundo: "indumentaria", titulo: " Addidas", desc: "Remera clásica con tiras y short deportivo", img: "Addidas/adidas (1).webp", accion: "showCategory('addidas')" },
-            { key: "lacoste", mundo: "indumentaria", titulo: " Lacoste", desc: "Remera y short importados con diseño exclusivo", img: "lacoste/lacoste (1).webp", accion: "showCategory('lacoste')" },
-            { key: "remeras", mundo: "indumentaria", titulo: "Camisetas De Futbol", desc: "Nuevas casacas y conjuntos oficiales importados", img: "remeras/casaca (1).webp", accion: "showCategory('remeras')" },
-            { key: "conjuntosDeFutbol", mundo: "indumentaria", titulo: "Conjuntos De Futbol", desc: "Conjuntos retro y actuales de equipos internacionales", img: "Conjuntos De Futbol/Tottenham Hotspur.webp", accion: "showCategory('conjuntosDeFutbol')" },
+            // SECCIÓN HOMBRE
+            { key: "cinturones", seccion: "hombre", titulo: "Cinturones Importados", desc: "Modelos de marcas exclusivas", img: "cintos/Montblanc.webp", accion: "showCategory('cinturones')" },
+            { key: "shortsjordan", seccion: "hombre", titulo: "Shorts Jordan", desc: "Shorts deportivos importados con diseños urbanos", img: "shortsjordan/jordanshort (1).webp", accion: "showCategory('shortsjordan')" },
+            { key: "jordan", seccion: "hombre", titulo: "Jordan", desc: "Remera y short importados estilo urbano / básquet", img: "Jordan/jordan (1).webp", accion: "showCategory('jordan')" },
+            { key: "addidas", seccion: "hombre", titulo: "Addidas", desc: "Remera clásica con tiras y short deportivo", img: "Addidas/adidas (1).webp", accion: "showCategory('addidas')" },
+            { key: "lacoste", seccion: "hombre", titulo: "Lacoste", desc: "Remera y short importados con diseño exclusivo", img: "lacoste/lacoste (1).webp", accion: "showCategory('lacoste')" },
+            { key: "remeras", seccion: "hombre", titulo: "Camisetas De Futbol", desc: "Nuevas casacas y conjuntos oficiales importados", img: "remeras/casaca (1).webp", accion: "showCategory('remeras')" },
+            { key: "conjuntosDeFutbol", seccion: "hombre", titulo: "Conjuntos De Futbol", desc: "Conjuntos retro y actuales de equipos internacionales", img: "Conjuntos De Futbol/Tottenham Hotspur.webp", accion: "showCategory('conjuntosDeFutbol')" },
+
+            // SECCIÓN MUJER (Vacía inicialmente, lista para productos de mujer)
+            { key: "vapers", seccion: "vapers", titulo: "Vapers y Pods", desc: "Elfbar Ice King, BC 15K e Ignite V250 Pro", img: "vapers/vaper (1).webp", accion: "showCategory('vapers')" },
             
-            { key: "vapers", mundo: "vapers", titulo: "Vapers y Pods", desc: "Elfbar Ice King, BC 15K e Ignite V250 Pro", img: "vapers/vaper (1).webp", accion: "showCategory('vapers')" },
-            
-            { key: "bodysplash", mundo: "perfumes", titulo: "Body Splash", desc: "Lociones corporales y fragancias frescas de uso diario", img: "bodysplash/bodysplash (1).webp", accion: "showCategory('bodysplash')" },
-            { key: "perfumes", mundo: "perfumes", titulo: "Fragancias árabes", desc: "Perfumes importados y árabes (Hombre, Mujer y Unisex)", img: "perfumes/Lattafa - Bade'e Al Oud (Oud for Glory).webp", accion: "showPerfumeSubmenu()" }
+            // SECCIÓN PERFUMERÍA (Fragancias y Body Splash como categorías independientes)
+            { key: "perfumes", seccion: "perfumes", titulo: "Fragancias árabes y Perfumes", desc: "Fragancias importadas para Hombre, Mujer y Unisex", img: "perfumes/Lattafa - Bade'e Al Oud (Oud for Glory).webp", accion: "showPerfumeSubmenu()" },
+            { key: "bodysplash", seccion: "perfumes", titulo: "Body Splash", desc: "Lociones corporales y fragancias frescas", img: "bodysplash/bodysplash (1).webp", accion: "showCategory('bodysplash')" }
         ];
 
-        // Arranca por defecto en el primer mundo ("indumentaria")
-        let mundoActual = 'indumentaria';
+        let seccionActual = 'hombre';
 
-        // Función para cambiar de mundo mediante las pestañas superiores
-        function filtrarMundo(mundo) {
-            mundoActual = mundo;
+        function filtrarSeccion(seccion) {
+            seccionActual = seccion;
             
-            // Actualizar clases activas en los botones
             document.querySelectorAll('.world-tab-btn').forEach(btn => btn.classList.remove('active'));
             event && event.currentTarget && event.currentTarget.classList.add('active');
 
             renderCategoriasMenu();
         }
 
-        // Función para renderizar el menú principal respetando los true/false y el mundo seleccionado
         function renderCategoriasMenu() {
             const gridContainer = document.getElementById("categories-grid-container");
             if (!gridContainer) return;
             gridContainer.innerHTML = "";
 
+            let hayElementos = false;
             listaCategorias.forEach(cat => {
                 if (configCategorias[cat.key]) {
-                    if (cat.mundo === mundoActual) {
+                    if (cat.seccion === seccionActual) {
+                        hayElementos = true;
                         const card = document.createElement("div");
                         card.className = "category-card";
                         card.setAttribute("onclick", cat.accion);
@@ -604,6 +619,12 @@
                     }
                 }
             });
+
+            if (!hayElementos) {
+                gridContainer.innerHTML = `<p style="text-align:center; color:#94a3b8; padding: 30px; font-size:0.95rem;">Próximamente más productos en esta sección.</p>`;
+            }
+
+            switchView("categories");
         }
 
         const productos = [
@@ -629,7 +650,7 @@
             { categoria: "shortsjordan", titulo: "Short Jordan - Rojo Fuego", descripcion: "Short deportivo rojo intenso con detalles negros en los laterales.", precio: "$30.000", imagen: "shortsjordan/jordanshort (14).webp" },
             { categoria: "shortsjordan", titulo: "Short Jordan - Turquesa y Verde", descripcion: "Short deportivo con combinación de tonos turquesa, verde y detalles oscuros.", precio: "$30.000", imagen: "shortsjordan/jordanshort (15).webp" },
 
-            // ---  JORDAN ---
+            // --- JORDAN ---
             { categoria: "jordan", titulo: "Conjunto Jordan - Negro y Blanco", descripcion: "Remera negra con gran logotipo Jumpman blanco y short deportivo con detalles geométricos.", precio: "$45.000", imagen: "Jordan/jordan (1).webp" },
             { categoria: "jordan", titulo: "Conjunto Jordan - Rojo y Negro", descripcion: "Remera roja con diseño Jumpman negro y short deportivo negro con franjas rojas.", precio: "$45.000", imagen: "Jordan/jordan (2).webp" },
             { categoria: "jordan", titulo: "Conjunto Jordan - Blanco y Negro", descripcion: "Remera blanca con silueta Jumpman negra y short deportivo negro a juego.", precio: "$45.000", imagen: "Jordan/jordan (3).webp" },
@@ -649,6 +670,7 @@
             { categoria: "lacoste", titulo: "Chomba Lacoste Gris Oscuro", descripcion: "Chomba Lacoste importada en color gris oscuro.", precio: "$30.000", imagen: "lacoste/Chomba Lacoste Gris Oscuro.webp" },
             { categoria: "lacoste", titulo: "Chomba Lacoste Marrón Taupe", descripcion: "Chomba Lacoste importada en color marrón taupe.", precio: "$30.000", imagen: "lacoste/Chomba Lacoste Marrón Taupe.webp" },
             { categoria: "lacoste", titulo: "Chomba Lacoste Negra", descripcion: "Chomba Lacoste importada clásica en color negro.", precio: "$30.000", imagen: "lacoste/Chomba Lacoste Negra.webp" },
+
             // --- VAPERS ---
             { categoria: "vapers", titulo: "Elfbar Ice King 40K Puff", descripcion: "Pod descartable de alta duración. Gran variedad de sabores frescos e intensos.", precio: "$38.500", imagen: "vapers/vaper (1).webp" },
             { categoria: "vapers", titulo: "Elfbar Ice King 40K Puff", descripcion: "Pod descartable de alta duración. Gran variedad de sabores frescos e intensos.", precio: "$38.500", imagen: "vapers/vaper (2).webp" },
@@ -764,33 +786,32 @@
             { categoria: "perfumes-unisex", titulo: "Xerjoff - Erba Pura", descripcion: "Eau de Parfum 100ml. Fragancia frutal, dulce y cítrica de nicho de máxima fijación.", precio: "$48.000", imagen: "perfumes/Xerjoff - Erba Pura.webp" }
         ];
 
-        let enSubmenuPerfumes = false;
+        let mostrandoSubmenuPerfumes = false;
 
         function switchView(viewName, isBackAction = false) {
             const categoriesMenu = document.getElementById("categories-menu");
-            const subcategoriesView = document.getElementById("subcategories-view");
+            const subPerfumesView = document.getElementById("subcategories-perfumes-view");
             const catalogView = document.getElementById("catalog-view");
             const worldsTabs = document.getElementById("worldsTabsContainer");
 
             categoriesMenu.style.display = "none";
-            subcategoriesView.style.display = "none";
+            subPerfumesView.style.display = "none";
             catalogView.style.display = "none";
-            if (worldsTabs) worldsTabs.style.display = "none";
+            if (worldsTabs) worldsTabs.style.display = "flex";
 
             if (viewName === "categories") {
                 categoriesMenu.style.display = "block";
-                if (worldsTabs) worldsTabs.style.display = "flex";
-                enSubmenuPerfumes = false;
+                mostrandoSubmenuPerfumes = false;
                 document.getElementById("searchInput").value = "";
-            } else if (viewName === "subcategories") {
-                subcategoriesView.style.display = "block";
-                enSubmenuPerfumes = true;
+            } else if (viewName === "sub-perfumes") {
+                subPerfumesView.style.display = "block";
+                mostrandoSubmenuPerfumes = true;
             } else if (viewName === "catalog") {
                 catalogView.style.display = "block";
             }
 
             if (!isBackAction) {
-                history.pushState({ view: viewName, enSubmenu: enSubmenuPerfumes }, "", "");
+                history.pushState({ view: viewName, submenuPerfumes: mostrandoSubmenuPerfumes }, "", "");
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -798,14 +819,14 @@
         window.addEventListener("popstate", function(e) {
             if (closeZoomModalOnBack()) return;
             if (e.state && e.state.view) {
-                enSubmenuPerfumes = !!e.state.enSubmenu;
+                mostrandoSubmenuPerfumes = e.state.submenuPerfumes || false;
                 switchView(e.state.view, true);
             } else {
                 switchView("categories", true);
             }
         });
 
-        history.replaceState({ view: "categories", enSubmenu: false }, "", "");
+        history.replaceState({ view: "categories", submenuPerfumes: false }, "", "");
 
         function renderProducts(lista) {
             const container = document.getElementById("catalog-container");
@@ -845,11 +866,7 @@
         }
 
         function showPerfumeSubmenu() {
-            switchView("subcategories");
-        }
-
-        function showCategoriesMenu() {
-            switchView("categories");
+            switchView("sub-perfumes");
         }
 
         function goBackFromSubmenu() {
@@ -864,11 +881,10 @@
             const text = query.toLowerCase().trim();
 
             if (text === "") {
-                showCategoriesMenu();
+                switchView("categories");
                 return;
             }
 
-            enSubmenuPerfumes = false;
             switchView("catalog");
 
             const resultados = productos.filter(p => 
@@ -880,7 +896,7 @@
             renderProducts(resultados);
         }
 
-        /* --- CONTROL DE ZOOM TÁCTIL Y GESTIÓN DE MODAL --- */
+        /* --- CONTROL DE ZOOM TÁCTIL Y MODAL --- */
         let scale = 1;
         let panning = false;
         let pointX = 0;
@@ -933,19 +949,13 @@
         const modalWrapper = document.getElementById("modalWrapper");
         const modalImg = document.getElementById("modalImage");
 
-        modalImg.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
+        modalImg.addEventListener('click', (e) => { e.stopPropagation(); });
 
         modalImg.addEventListener('touchend', (e) => {
             const currentTime = new Date().getTime();
             const tapLength = currentTime - lastTouchEnd;
             if (tapLength < 300 && tapLength > 0) {
-                if (scale === 1) {
-                    scale = 2.5;
-                } else {
-                    resetZoomTransform();
-                }
+                if (scale === 1) { scale = 2.5; } else { resetZoomTransform(); }
                 updateTransform();
                 e.preventDefault();
             }
@@ -1005,17 +1015,13 @@
         }, { passive: true });
 
         modalWrapper.addEventListener('touchend', (e) => {
-            if (e.touches.length < 2) {
-                initialDistance = null;
-            }
-            if (e.touches.length === 0) {
-                panning = false;
-            }
+            if (e.touches.length < 2) { initialDistance = null; }
+            if (e.touches.length === 0) { panning = false; }
         });
 
-        // Inicializar menú al cargar la página (empieza mostrando Indumentaria)
+        // Inicializar arrancando en la sección Hombre al cargar
         window.addEventListener("DOMContentLoaded", () => {
-            renderCategoriasMenu();
+            filtrarSeccion('hombre');
         });
     </script>
 </body>
